@@ -1,0 +1,8 @@
+{
+  "java.configuration.maven.userSettings": null,
+  "java.import.maven.enabled": true,
+  "java.project.sourcePaths": [
+    "api-tests/java/src/main/java"
+  ],
+  "java.project.referencedLibraries": []
+}
