@@ -3,3 +3,4 @@ target
 go.mod
 go.sum
 package-lock.json
+.idea/

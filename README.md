@@ -21,6 +21,7 @@
 - Java 17+
 - Maven 3.9+
 - [How to install Java 17+ & Maven Setup](README-java-maven.md)
+- [IntelliJ or another IDE for Java](https://www.jetbrains.com/idea/download/)
 
 #### Build
 
@@ -87,19 +88,11 @@ Optional header:
 
 Returns a list of accounts. Supports pagination and filtering.
 
-**Query Parameters:**
-
-| Parameter     | Required | Default | Validation                       | Description:               |
-| ------------- | -------- | ------- | -------------------------------- | -------------------------- |
-| `page`        | No       | 1       | Must be ≥ 1                      | Page number                |
-| `page-size`   | No       | 25      | Must be 1–1000                   | Number of records per page |
-| `accountType` | No       | —       | Must be `Personal` or `Business` | Filters accounts           |
-
 **Example Request:**
 
 ```bash
 curl --request GET \
-  --url "http://localhost:8080/accounts?page=1&page-size=25&accountType=Personal" \
+  --url "http://localhost:8080/accounts" \
   --header "Authorization: Bearer test-token" \
   --header "x-fapi-interaction-id: 1f8e2a24-4c2b-4e06-b0b0-1f0d8bb2aabc"
 ```
@@ -108,21 +101,25 @@ curl --request GET \
 
 ```json
 {
-  "Data": {
-    "Account": [
-      {
-        "AccountId": "11111111-1111-1111-1111-111111111111",
-        "Currency": "GBP",
-        "Nickname": "Main Personal",
-        "AccountType": "Personal"
-      }
-    ]
+  "data": [
+    {
+      "brandName": "Organização A",
+      "companyCnpj": "21128159000166",
+      "type": "CONTA_DEPOSITO_A_VISTA",
+      "compeCode": "001",
+      "branchCode": "1234",
+      "number": "94088392",
+      "checkDigit": "4",
+      "accountId": "ACC-001"
+    }
+  ],
+  "links": {
+    "self": "http://localhost:8084/accounts?page=1&page-size=25"
   },
-  "Links": {
-    "Self": "/accounts?page=1&page-size=25"
-  },
-  "Meta": {
-    "TotalPages": 1
+  "meta": {
+    "totalRecords": 3,
+    "totalPages": 1,
+    "requestDateTime": "2026-01-30T18:11:25.13686Z"
   }
 }
 ```
@@ -131,17 +128,11 @@ curl --request GET \
 
 Returns a single account by ID.
 
-**Path Validation:**
-
-* `accountId` must match UUID format:
-* Invalid UUID format → **400 Bad Request**
-* Valid format but not found → **404 Not Found**
-
 **Example Request:**
 
 ```bash
 curl --request GET \
-  --url "http://localhost:8080/accounts/11111111-1111-1111-1111-111111111111" \
+  --url "http://localhost:8080/accounts/ACC-001" \
   --header "Authorization: Bearer test-token" \
   --header "x-fapi-interaction-id: 1f8e2a24-4c2b-4e06-b0b0-1f0d8bb2aabc"
 ```
@@ -150,18 +141,23 @@ curl --request GET \
 
 ```json
 {
-  "Data": {
-    "Account": {
-      "AccountId": "11111111-1111-1111-1111-111111111111",
-      "Currency": "GBP",
-      "Nickname": "Main Personal",
-      "AccountType": "Personal"
-    }
+  "data": {
+    "compeCode": "001",
+    "branchCode": "1234",
+    "number": "94088392",
+    "checkDigit": "4",
+    "type": "CONTA_DEPOSITO_A_VISTA",
+    "subtype": "INDIVIDUAL",
+    "currency": "BRL"
   },
-  "Links": {
-    "Self": "/accounts/11111111-1111-1111-1111-111111111111"
+  "links": {
+    "self": "http://localhost:8084/accounts/ACC-001"
   },
-  "Meta": {}
+  "meta": {
+    "totalRecords": 1,
+    "totalPages": 1,
+    "requestDateTime": "2026-01-30T18:12:23.13676Z"
+  }
 }
 ```
 
@@ -222,8 +218,9 @@ stack/java/
 ### Prerequisites
 
 - Node.js 14 or higher
-- [How to install Node and NPM](README-node-npm.md)
 - npm
+- [How to install Node and NPM](README-node-npm.md)
+- [Visual Studio Code/Cursor or another IDE for javascript](https://code.visualstudio.com/)
 - The API server running (default: `http://localhost:8080`)
 
 ### How to Execute Tests
