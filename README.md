@@ -239,7 +239,7 @@ npm install
 
 Run the tests:
 ```bash
-node axios.js
+npm run test:axios
 ```
 
 #### Option 2: Using npm scripts
@@ -273,7 +273,7 @@ npm install
 
 Run the tests:
 ```bash
-node supertest.js
+npm run test:supertest
 ```
 
 #### Option 2: Using npm scripts
