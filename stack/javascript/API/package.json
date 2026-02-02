@@ -4,10 +4,8 @@
   "description": "API tests for Account service using axios and supertest",
   "main": "axios.js",
   "scripts": {
-    "test": "mocha axios.js supertest.js",
     "test:axios": "mocha axios.js",
-    "test:supertest": "mocha supertest.js",
-    "test:all": "mocha axios.js supertest.js"
+    "test:supertest": "mocha supertest.js"
   },
   "keywords": [
     "api",
