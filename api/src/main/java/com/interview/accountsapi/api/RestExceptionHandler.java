@@ -34,7 +34,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<ResponseErrorMetaSingle> noHandlerFound(NoHandlerFoundException ex) {
         return response(HttpStatus.NOT_FOUND, "NOT_FOUND", "Not Found",
-                "No handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL());
+                "No endpoint found for " + ex.getHttpMethod() + " " + ex.getRequestURL());
     }
 
     @ExceptionHandler(MissingRequestHeaderException.class)
