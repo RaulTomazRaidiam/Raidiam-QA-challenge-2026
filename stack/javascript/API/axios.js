@@ -1,7 +1,6 @@
 const request = require('supertest');
 const { v4: uuidv4 } = require('uuid');
 const { expect } = require('chai');
-const { describe, it } = require('mocha');
 
 const BASE_URL = 'http://locahost:8080';
 const ACCOUNTS_ENDPOINT = '/account';
