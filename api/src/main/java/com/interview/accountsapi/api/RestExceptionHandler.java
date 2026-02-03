@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -28,6 +29,12 @@ public class RestExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ResponseErrorMetaSingle> notFound(NotFoundException ex) {
         return response(HttpStatus.NOT_FOUND, "NOT_FOUND", "Not Found", ex.getMessage());
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    public ResponseEntity<ResponseErrorMetaSingle> noHandlerFound(NoHandlerFoundException ex) {
+        return response(HttpStatus.NOT_FOUND, "NOT_FOUND", "Not Found",
+                "No handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL());
     }
 
     @ExceptionHandler(MissingRequestHeaderException.class)
