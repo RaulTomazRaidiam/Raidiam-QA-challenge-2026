@@ -6,7 +6,6 @@
 - [Running with Java Code](#running-with-java-code)
 - [Running with JavaScript (Axios)](#running-with-javascript-axios)
 - [Running with JavaScript (Supertest)](#running-with-javascript-supertest)
-- [Running with Go](#running-with-go)
 
 ## Test API Configuration
 
@@ -282,45 +281,4 @@ npm run test:supertest
 cd stack/javascript/API
 npm install
 npm run test:supertest
-```
-
-## Running with Go
-
-### Prerequisites
-
-- Go 1.21 or higher
-- [How to install Go 1.21+ Setup](README-go.md)
-- The API server running (default: `http://localhost:8080`)
-
-
-### How to Execute Tests
-
-#### Option 1: Using go run
-
-Navigate to the go project directory:
-```bash
-cd stack/go
-```
-
-Download dependencies:
-```bash
-go mod tidy
-```
-
-Run the tests:
-```bash
-go run main.go
-```
-
-#### Option 2: Build and Run
-
-Build the executable:
-```bash
-cd stack/go
-go build -o account-tests main.go
-```
-
-Run the executable:
-```bash
-./account-tests
 ```
