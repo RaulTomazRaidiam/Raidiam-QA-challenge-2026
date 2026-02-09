@@ -1,4 +1,4 @@
-const request = require('supertest');
+const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 const { expect } = require('chai');
 
@@ -18,13 +18,13 @@ function createHeaders() {
 }
 
 async function getAllAccounts() {
-  const response = await request(BASE_URL)
-    .get(ACCOUNTS_ENDPOINT)
-    .set(createHeaders())
+  const response = await axios.get(BASE_URL + ACCOUNTS_ENDPOINT, {
+    headers: createHeaders(),
+  });
 
-  expect(response.statusCode).to.equal(200);
+  expect(response.status).to.equal(200);
 
-  return (response.body.data || []).map(account => ({
+  return (response.data.data || []).map(account => ({
     accountId: account.accountId,
     brandName: account.brandName,
     companyCnpj: account.companyCnpj,
@@ -37,12 +37,13 @@ async function getAllAccounts() {
 }
 
 async function getAccountById(accountId) {
-  const response = await request(BASE_URL)
-    .get(ACCOUNTS_ENDPOINT + '/' + accountId)
-    .set(createHeaders())
-    .expect(200);
+  const response = await axios.get(BASE_URL + ACCOUNTS_ENDPOINT + '/' + accountId, {
+    headers: createHeaders(),
+  });
 
-  const { data } = response.body;
+  expect(response.status).to.equal(200);
+
+  const { data } = response.data;
   return {
     compeCode: data.compeCode,
     branchCode: data.branchCode,
@@ -54,7 +55,7 @@ async function getAccountById(accountId) {
   };
 }
 
-describe('Accounts API (Supertest)', function () {
+describe('Accounts API (Axios)', function () {
   describe('GET /account', function () {
     it('returns 200 and a list of accounts with required fields', async function () {
       const accounts = await getAllAccounts();
