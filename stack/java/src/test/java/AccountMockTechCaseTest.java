@@ -15,6 +15,7 @@ import lombok.Setter;
 public class AccountMockTechCaseTest {
     private String baseUrl;
     private String accountsEndpoint;
+    private String bearerToken;
     private List<Account> accounts;
 
     @BeforeEach
@@ -23,6 +24,7 @@ public class AccountMockTechCaseTest {
         baseUrl = System.getProperty("base.url", 
                     System.getenv().getOrDefault("BASE_URL", "http://locahost:8080"));
         accountsEndpoint = "/account";
+        bearerToken = "";
         accounts = new ArrayList<>();
     }
 
@@ -34,7 +36,7 @@ public class AccountMockTechCaseTest {
         // Getting all accounts from the mock project
         Response response = given()
             .auth()
-            .oauth2("Bearer 1234567890")
+            .oauth2(bearerToken)
             .when().log().all()
             .get(baseUrl + accountsEndpoint);
 
@@ -72,7 +74,7 @@ public class AccountMockTechCaseTest {
         // Do a request to the specific account endpoint
         Response accountResponse = given()
             .auth()
-            .oauth2("Bearer 1234567890")
+            .oauth2(bearerToken)
             .header("x-fapi-interaction-id", UUID.randomUUID().toString())
             .when().log().all()
             .get(baseUrl + accountsEndpoint + "/" + accountId);
